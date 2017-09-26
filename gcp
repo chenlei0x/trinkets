@@ -1,23 +1,47 @@
 #! /bin/bash
-ip=$(ip a)
+TMP=$(getopt -o U::u:p: --long user: -- "$@")
+eval set -- "$TMP"
+while true
+do
+	case "$1" in
+		-u)
+			user=$2; shift 2 ;;
+			
+		-U)
+			user=$USER
+			shift 2;;
+		-p)
+			dir=$2 
+			shift 2;;
+		--)
+			shift
+			break;;
+		*)
+			exit 1;;
+	esac
+done
 ip_list=$(ip a | grep "inet " | awk '{print $2}' | cut -d'/'  -f1)
-user=root
 scp_cmd=scp
-
-target=${1:-$PWD}
-if [ ${target:0:1} == '/' ]
+: ${user:=$USER}
+: ${dir:=$PWD}
+if [ ${dir:0:1} != '/' ]
 then
-	target_path=$1
-else
-	target_path=${PWD%/}/${target}
+	dir=${PWD%/}/$dir
 fi
 
-#echo $target_path
 for ip in $ip_list
 do
 	if [ $ip == "127.0.0.1" ]
 	then
 		continue
 	fi
-	echo $scp_cmd $user@$ip:$target_path
+	if [ "$*" == "" ]
+	then
+		echo $scp_cmd $user@$ip:$dir .
+		exit
+	fi
+	for target in "$@"
+	do
+		echo $scp_cmd $user@$ip:$dir/$target .
+	done
 done
