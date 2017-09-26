@@ -19,7 +19,6 @@ do
 			exit 1;;
 	esac
 done
-ip_list=$(ip a | grep "inet " | awk '{print $2}' | cut -d'/'  -f1)
 scp_cmd=scp
 : ${user:=$USER}
 : ${dir:=$PWD}
@@ -34,6 +33,7 @@ then
 	dir=${PWD%/}/$dir
 fi
 
+ip_list=$(ip a | grep "inet " | awk '{print $2}' | cut -d'/'  -f1)
 for ip in $ip_list
 do
 	if [ $ip == "127.0.0.1" ]
