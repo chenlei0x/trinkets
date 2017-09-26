@@ -5,14 +5,7 @@ while true
 do
 	case "$1" in
 		-u)
-			case $2 in
-				-*)
-					echo invalid user
-					exit 1;;
-				*)
-					user=$2; shift 2 ;;
-			esac;;
-			
+			user=$2; shift 2 ;;
 		-U)
 			user=root
 			shift 2;;
@@ -30,6 +23,12 @@ ip_list=$(ip a | grep "inet " | awk '{print $2}' | cut -d'/'  -f1)
 scp_cmd=scp
 : ${user:=$USER}
 : ${dir:=$PWD}
+(id -u "$user") > /dev/null 2>&1
+if [ ! $? -eq 0 ]
+then
+	echo invalid user
+	exit 1
+fi
 if [ ${dir:0:1} != '/' ]
 then
 	dir=${PWD%/}/$dir
