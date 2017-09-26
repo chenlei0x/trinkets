@@ -1,0 +1,23 @@
+#! /bin/bash
+ip=$(ip a)
+ip_list=$(ip a | grep "inet " | awk '{print $2}' | cut -d'/'  -f1)
+user=root
+scp_cmd=scp
+
+target=${1:-$PWD}
+if [ ${target:0:1} == '/' ]
+then
+	target_path=$1
+else
+	target_path=${PWD%/}/${target}
+fi
+
+#echo $target_path
+for ip in $ip_list
+do
+	if [ $ip == "127.0.0.1" ]
+	then
+		continue
+	fi
+	echo $scp_cmd $user@$ip:$target_path
+done
