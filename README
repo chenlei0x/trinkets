@@ -1,0 +1,34 @@
+gcp
+Do you feel borning when using scp to copy files?
+Look at what you do...
+1. find ip of the host
+2. generate the absolute path for a file
+3. input the scp command like scp user@ip_found_above:abs_path_found_above .
+
+gcp is aimed at assist you to generate scp command line, and what you need
+is just copy this file and paste it one your target machine
+
+Example 1
+	INPUT 
+	gcp -p path/to/file
+	note that this is a relative path, and we need to transform it to abs path.
+
+	OUTPUT
+	scp user@ip:$PWD/path/to/file .
+
+Example 2
+	INPUT
+	gcp -p /path/to/file
+	note that this is a abs path, we done need and transformation
+	OUTPUT
+	scp user@ip:/path/to/file .
+
+Example 3
+	INPUT
+	gcp -p path a b c
+	OUTPUT
+	scp user@ip:/_path/a
+	scp user@ip:/_path/b
+	scp user@ip:/_path/c
+	_path is path in absolute form
+
