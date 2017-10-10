@@ -1,0 +1,2 @@
+#! /bin/bash
+osc -A obs "$@"
