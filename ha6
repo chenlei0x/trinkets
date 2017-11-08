@@ -1,2 +1,0 @@
-#!/bin/bash
-ssh -X root@bj-ha-6.ha.suse.asia
