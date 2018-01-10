@@ -1,10 +1,12 @@
 #!/bin/bash
 
+#sle 15 on ha-2
 no=$1
 #((no -- ))
 echo $no
 host_list=(10.67.162.150
-	10.67.162.157)
+	10.67.162.157
+	10.67.162.214)
 host=${host_list[$no]}
 if [ -z $host ]
 then
