@@ -1,12 +1,14 @@
 #!/bin/bash
 
 no=$1
-((no -- ))
 echo $no
 
 #tumbleweed on ha-2
-host_list=(10.67.162.145
-10.67.162.76)
+host_list=(
+10.67.162.145
+10.67.162.76
+10.67.162.181
+)
 host=${host_list[$no]}
 if [ -z $host ]
 then
