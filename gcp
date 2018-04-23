@@ -21,32 +21,39 @@ do
 done
 scp_cmd=scp
 : ${user:=$USER}
-: ${dir:=$PWD}
 (id -u "$user") > /dev/null 2>&1
 if [ ! $? -eq 0 ]
 then
 	echo invalid user
 	exit 1
 fi
-if [ ${dir:0:1} != '/' ]
+
+if [ "${dir:0:1}" != '/' ]
 then
 	dir=${PWD%/}/$dir
 fi
 
+dir=${dir%/}
+
 ip_list=$(ip a | grep "inet " | awk '{print $2}' | cut -d'/'  -f1)
 for ip in $ip_list
 do
-	if [ $ip == "127.0.0.1" ]
+	if [ $ip = "127.0.0.1" ]
 	then
 		continue
 	fi
-	if [ "$*" == "" ]
+	if [ "$*" = "" ]
 	then
 		echo $scp_cmd $user@$ip:$dir .
 		exit
 	fi
 	for target in "$@"
 	do
-		echo $scp_cmd $user@$ip:$dir/$target .
+		if [ ${target:0:1} = '/' ]
+		then
+			echo $scp_cmd $user@$ip:$target .
+		else
+			echo $scp_cmd $user@$ip:$dir/$target .
+		fi
 	done
 done
