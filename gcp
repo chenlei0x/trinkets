@@ -49,6 +49,10 @@ do
 	fi
 	for target in "$@"
 	do
+		if [ -d $target ]
+		then
+			scp_cmd="$scp_cmd -r"
+		fi
 		if [ ${target:0:1} = '/' ]
 		then
 			echo $scp_cmd $user@$ip:$target .
