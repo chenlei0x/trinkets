@@ -3,7 +3,12 @@ ha_no=$1
 echo $ha_no
 host=bj-ha-${ha_no}.ha.suse.asia
 user=root
-passwd=suse
+if [ $ha_no == 3 -o $ha_no == 1 ]
+then
+	passwd=novell
+else
+	passwd=suse
+fi
 known_hosts="$HOME/.ssh/known_hosts"
 
 if [ -z $ha_no ]

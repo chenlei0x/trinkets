@@ -4,9 +4,8 @@
 no=$1
 #((no -- ))
 echo $no
-host_list=(10.67.162.150
-	10.67.162.157
-	10.67.162.214)
+host_list=(10.67.162.152
+	10.67.162.66)
 host=${host_list[$no]}
 if [ -z $host ]
 then

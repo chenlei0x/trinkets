@@ -51,7 +51,7 @@ do
 	do
 		if [ -d $target ]
 		then
-			scp_cmd="$scp_cmd -r"
+			scp_cmd="$scp_cmd -r -q"
 		fi
 		if [ ${target:0:1} = '/' ]
 		then
