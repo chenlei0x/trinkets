@@ -4,8 +4,8 @@ no=$1
 #((no -- ))
 echo $no
 host_list=(
-	10.67.162.70
-	10.67.162.200
+	10.67.162.87
+	10.67.162.103
 	)
 host=${host_list[$no]}
 echo $host
